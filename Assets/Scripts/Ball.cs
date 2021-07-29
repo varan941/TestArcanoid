@@ -32,13 +32,11 @@ public class Ball : Singleton<Ball>
     {
         if (coll.gameObject.tag == "Wall")
         {
-            var velocity = _rigidbody.angularVelocity;
+            var velocity = _rigidbody.velocity;
+            var rotateVector = Quaternion.Euler(0, 90, 0) * velocity;            
+            _rigidbody.angularVelocity = Vector3.zero;            
 
-            _rigidbody.angularVelocity = Vector3.zero;
-            gameObject.transform.rotation = Quaternion.Euler(0, -transform.rotation.y, 0);
-            velocity.x = (velocity.x * speed) * -1;
-
-            _rigidbody.AddTorque(velocity);
+            _rigidbody.AddTorque(rotateVector * speed);
         }
     }
 }
